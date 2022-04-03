@@ -9,6 +9,28 @@ class Expense {
   }
 }
 
+class Database {
+
+  constructor() {
+    let id = localStorage.getItem('id');
+    if(id === null) {
+      localStorage.setItem('id', 0);
+    }
+  }
+
+  getNextId() {
+    let nextId = localStorage.getItem('id');
+    return parseInt(nextId)+1;
+  }
+
+  store(e) {
+    let id = this.getNextId();
+    localStorage.setItem('id', id);
+    localStorage.setItem(id, JSON.stringify(e));
+  }
+}
+let db = new Database();
+
 const formRegister = document.getElementById('register');
 formRegister.addEventListener('submit', e => {
   e.preventDefault();
@@ -33,5 +55,5 @@ function registerExpense() {
     amount.value
   );
 
-  console.log(expense);
+  db.store(expense);
 }
