@@ -54,6 +54,19 @@ class Database {
     localStorage.setItem('id', id);
     localStorage.setItem(id, JSON.stringify(e));
   }
+
+  getAllRegisters() {
+    let expenses = [];
+    let id = localStorage.getItem('id');
+    for(let i = 1; i <= id; i++) {
+      const expense = JSON.parse(localStorage.getItem(i));
+      if(expense === null) {
+        continue;
+      }
+      expenses.push(expense);
+    }
+    return expenses;
+  }
 }
 let db = new Database();
 
@@ -96,27 +109,67 @@ function registerExpense() {
 function showSuccessModal() {
   const modal = document.querySelector('#modal-feedback');
   const message = modal.querySelector('#modal-msg');
-  message.textContent = " A despesa foi registrada no sistema com sucesso."
+  message.textContent = " A despesa foi registrada no sistema com sucesso.";
 
   const title = modal.querySelector('.modal-title');
   title.textContent = "Registro feito";
   title.className = 'modal-title text-success';
 
   const btn = modal.querySelector('.btn');
-  btn.className = 'btn btn-outline-success'
-  btn.textContent = 'Fechar'
+  btn.className = 'btn btn-outline-success';
+  btn.textContent = 'Fechar';
 }
 
 function showErrorModal() {
   const modal = document.querySelector('#modal-feedback');
   const message = modal.querySelector('#modal-msg');
-  message.textContent = "Existem campos obrigatórios que não foram preenchidos com dados válidos."
+  message.textContent = "Existem campos obrigatórios que não foram preenchidos com dados válidos.";
 
   const title = modal.querySelector('.modal-title');
   title.textContent = "Erro na gravação";
   title.className = 'modal-title text-danger';
 
   const btn = modal.querySelector('.btn');
-  btn.className = 'btn btn-danger'
-  btn.textContent = 'Voltar e corrigir'
+  btn.className = 'btn btn-danger';
+  btn.textContent = 'Voltar e corrigir';
+}
+
+function getType(t) {
+  console.log()
+  switch(t) {
+    case 1: return 'Alimentação';
+    case 2: return 'Educação';
+    case 3: return 'Lazer';
+    case 4: return 'Saúde';
+    case 5: return 'Transporte';
+  }
+}
+
+function loadExpensesList() {
+  const expenses = db.getAllRegisters();
+  const bodyTable = document.querySelector('table.table > tbody');
+
+  expenses.forEach(expense => {
+    const tr = bodyTable.insertRow();
+
+    const dateCell = tr.insertCell(0);
+    dateCell.textContent = new Date(
+      expense.year,
+      (expense.month - 1),
+      expense.day
+    ).toLocaleDateString();
+
+    const typeCell = tr.insertCell(1);
+    typeCell.textContent = getType(parseInt(expense.type));
+
+    const descriptionCell = tr.insertCell(2);
+    descriptionCell.textContent = expense.description;
+
+    const amountCell = tr.insertCell(3);
+    amountCell.textContent = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(expense.amount);
+
+    tr.append(dateCell, typeCell, descriptionCell, amountCell);
+    bodyTable.appendChild(tr);
+  })
+
 }
