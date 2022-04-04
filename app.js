@@ -83,8 +83,40 @@ function registerExpense() {
 
   if (expense.validateData()) {
     db.store(expense);
-    $('#success').modal('show');
+    $('#modal-feedback').modal('show');
+    showSuccessModal()
+    // document.querySelector('#modal-msg').textContent = "A despesa foi registrada no sistema com sucesso."
+    // document.querySelector('.modal-title').textContent = "Registro feito"
   } else {
-    $('#error').modal('show');
+    showErrorModal();
+    $('#modal-feedback').modal('show');
   }
+}
+
+function showSuccessModal() {
+  const modal = document.querySelector('#modal-feedback');
+  const message = modal.querySelector('#modal-msg');
+  message.textContent = " A despesa foi registrada no sistema com sucesso."
+
+  const title = modal.querySelector('.modal-title');
+  title.textContent = "Registro feito";
+  title.className = 'modal-title text-success';
+
+  const btn = modal.querySelector('.btn');
+  btn.className = 'btn btn-outline-success'
+  btn.textContent = 'Fechar'
+}
+
+function showErrorModal() {
+  const modal = document.querySelector('#modal-feedback');
+  const message = modal.querySelector('#modal-msg');
+  message.textContent = "Existem campos obrigatórios que não foram preenchidos com dados válidos."
+
+  const title = modal.querySelector('.modal-title');
+  title.textContent = "Erro na gravação";
+  title.className = 'modal-title text-danger';
+
+  const btn = modal.querySelector('.btn');
+  btn.className = 'btn btn-danger'
+  btn.textContent = 'Voltar e corrigir'
 }
