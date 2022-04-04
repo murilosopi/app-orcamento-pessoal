@@ -7,20 +7,46 @@ class Expense {
     this.description = description;
     this.amount = amount;
   }
+
+  validateData() {
+    for (let attr in this) {
+      if (
+        this[attr] == undefined ||
+        this[attr] == '' ||
+        this[attr] == null
+      ) {
+        return false;
+      }
+    }
+
+    // validates if the day of february is valid
+    if (
+      this.month == 2 && this.day > 29 ||
+      this.month == 2 && this.year % 4 != 0 && this.day == 29
+    ) {
+      return false;
+    } else {
+      // validates if the month has 31 days
+      if (this.month % 2 == 1 && this.day > 30) {
+        return false;
+      }
+      return true;
+    }
+  }
 }
 
 class Database {
 
   constructor() {
     let id = localStorage.getItem('id');
-    if(id === null) {
+    if (id === null) {
       localStorage.setItem('id', 0);
     }
   }
 
   getNextId() {
     let nextId = localStorage.getItem('id');
-    return parseInt(nextId)+1;
+    return parseInt(nextId) + 1;
   }
 
   store(e) {
@@ -55,5 +81,10 @@ function registerExpense() {
     amount.value
   );
 
-  db.store(expense);
+  if (expense.validateData()) {
+    db.store(expense);
+    $('#success').modal('show');
+  } else {
+    $('#error').modal('show');
+  }
 }
