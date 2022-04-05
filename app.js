@@ -176,6 +176,10 @@ function getType(t) {
     case 3: return 'Lazer';
     case 4: return 'Saúde';
     case 5: return 'Transporte';
+    case 6: return 'Comunicação';
+    case 7: return 'Beleza';
+    case 8: return 'Vestuário';
+    case 9: return 'Consumo';
   }
 }
 
