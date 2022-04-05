@@ -67,17 +67,50 @@ class Database {
     }
     return expenses;
   }
+
+  search(expense) {
+    let filtredExpenses = this.getAllRegisters();
+    // ano
+    if(expense.year != '') {
+      filtredExpenses = filtredExpenses.filter(e => e.year == expense.year);
+    }
+    if(expense.month != '') {
+      filtredExpenses = filtredExpenses.filter(e => e.month == expense.month);
+    }
+    if(expense.day != '') {
+      filtredExpenses = filtredExpenses.filter(e => e.day == expense.day);
+    }
+    if(expense.type != '') {
+      filtredExpenses = filtredExpenses.filter(e => e.type == expense.type);
+    }
+    if(expense.description != '') {
+      filtredExpenses = filtredExpenses.filter(e => e.description == expense.description);
+    }
+
+    return filtredExpenses;
+  }
 }
 let db = new Database();
 
-const formRegister = document.getElementById('register');
-formRegister.addEventListener('submit', e => {
-  e.preventDefault();
-  registerExpense(day.value, month.value, year.value, type.value, description.value, amount.value);
-  formRegister.reset();
-});
+try {
+  const formRegister = document.getElementById('register');
+  formRegister.addEventListener('submit', e => {
+    e.preventDefault();
+    const expense = createExpense();
+    registerExpense(expense);
+    formRegister.reset();
+  });
+} catch {
+  const formSearch = document.getElementById('search');
+  formSearch.addEventListener('submit', e => {
+    e.preventDefault();
+    searchExpense();
+    formSearch.reset();
+  });
+}
 
-function registerExpense() {
+
+function createExpense() {
   const day = document.getElementById('day');
   const month = document.getElementById('month');
   const year = document.getElementById('year');
@@ -94,12 +127,14 @@ function registerExpense() {
     amount.value
   );
 
+  return expense;
+}
+
+function registerExpense(expense) {
   if (expense.validateData()) {
     db.store(expense);
     $('#modal-feedback').modal('show');
     showSuccessModal()
-    // document.querySelector('#modal-msg').textContent = "A despesa foi registrada no sistema com sucesso."
-    // document.querySelector('.modal-title').textContent = "Registro feito"
   } else {
     showErrorModal();
     $('#modal-feedback').modal('show');
@@ -135,7 +170,6 @@ function showErrorModal() {
 }
 
 function getType(t) {
-  console.log()
   switch(t) {
     case 1: return 'Alimentação';
     case 2: return 'Educação';
@@ -145,9 +179,9 @@ function getType(t) {
   }
 }
 
-function loadExpensesList() {
-  const expenses = db.getAllRegisters();
+function loadExpensesList(expenses) {
   const bodyTable = document.querySelector('table.table > tbody');
+  bodyTable.textContent = null;
 
   expenses.forEach(expense => {
     const tr = bodyTable.insertRow();
@@ -171,5 +205,10 @@ function loadExpensesList() {
     tr.append(dateCell, typeCell, descriptionCell, amountCell);
     bodyTable.appendChild(tr);
   })
+}
 
+function searchExpense() {
+  const expense = createExpense();
+  const soughtExpenses = db.search(expense);
+  loadExpensesList(soughtExpenses);
 }

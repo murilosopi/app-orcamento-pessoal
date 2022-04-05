@@ -10,7 +10,7 @@
   <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/fe0f6eac9b.js" crossorigin="anonymous"></script>
 </head>
-<body onload="loadExpensesList()">
+<body onload="loadExpensesList(db.getAllRegisters())">
   
   <nav class="navbar navbar-expand-sm navbar-dark bg-info">
     <div class="container">
@@ -127,8 +127,15 @@
           </div>
         </div>
       </div>
+      <div class="row mt-3">
+        <div class="col">
+          <button class="btn btn-block btn-outline-dark" onclick="loadExpensesList(db.getAllRegisters())">
+            Restaurar
+            <i class="fa-solid fa-rotate"></i>
+          </button>
+        </div>
+      </div>
     </div>
-
   </main>
 
   <script src="app.js"></script>
