@@ -158,7 +158,7 @@ function showSuccessModal() {
 function showErrorModal() {
   const modal = document.querySelector('#modal-feedback');
   const message = modal.querySelector('#modal-msg');
-  message.textContent = "Existem campos obrigatórios que não foram preenchidos com dados válidos.";
+  message.textContent = "Existem campos obrigatórios que não foram preenchidos com dados válidos. Por favor, preencha novamente.";
 
   const title = modal.querySelector('.modal-title');
   title.textContent = "Erro na gravação";
@@ -166,7 +166,7 @@ function showErrorModal() {
 
   const btn = modal.querySelector('.btn');
   btn.className = 'btn btn-danger';
-  btn.textContent = 'Voltar e corrigir';
+  btn.textContent = 'Fechar';
 }
 
 function getType(t) {
