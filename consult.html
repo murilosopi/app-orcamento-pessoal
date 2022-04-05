@@ -30,9 +30,47 @@
   </nav>
 
   <main class="container py-5">
-    <h1 class="text-center">Consulta de despesas</h1>
+    <section class="container text-center">
+      <h1>Consulta de despesas</h1>
+      <p class="lead text-dark">Abaixo você pode consultar suas despesas registradas ou filtrá-las para um resultado mais específico.</p>
+    </section>
+
+    <hr class="w-75">
+
+    </p>
     <form id="search">
       <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="table-responsive">
+              <table class="table table-border table-hover border">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Data</th>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Descrição</th>
+                    <th scope="col">Valor</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <small class="d-block text-right">Em dispositivos menores deslize a tabela para uma visualização completa.</small>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col">
+            <button class="btn btn-block btn-outline-dark" onclick="loadExpensesList(db.getAllRegisters())">
+              Restaurar
+              <i class="fa-solid fa-rotate"></i>
+            </button>
+          </div>
+        </div>
+        
+        <hr class="mb-0 w-75">
+
+
         <div class="row">
           
           <div class="col-md-2 col-sm-4 mt-3 col-4">
@@ -105,37 +143,7 @@
           </div>
         </div>
       </div>
-    </form>
-    
-    <hr class="my-3 w-75">
-    
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <div class="table-responsive">
-            <table class="table table-border table-hover border">
-              <thead class="thead-dark">
-                <tr>
-                  <th scope="col">Data</th>
-                  <th scope="col">Tipo</th>
-                  <th scope="col">Descrição</th>
-                  <th scope="col">Valor</th>
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <div class="row mt-3">
-        <div class="col">
-          <button class="btn btn-block btn-outline-dark" onclick="loadExpensesList(db.getAllRegisters())">
-            Restaurar
-            <i class="fa-solid fa-rotate"></i>
-          </button>
-        </div>
-      </div>
-    </div>
+    </form>    
   </main>
 
   <script src="app.js"></script>
