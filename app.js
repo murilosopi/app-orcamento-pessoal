@@ -63,6 +63,7 @@ class Database {
       if(expense === null) {
         continue;
       }
+      expense.id = i;
       expenses.push(expense);
     }
     return expenses;
@@ -89,6 +90,10 @@ class Database {
 
     return filtredExpenses;
   }
+
+  remove(id) {
+      localStorage.removeItem(id);
+    }
 }
 let db = new Database();
 
@@ -206,7 +211,10 @@ function loadExpensesList(expenses) {
     const amountCell = tr.insertCell(3);
     amountCell.textContent = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(expense.amount);
 
-    tr.append(dateCell, typeCell, descriptionCell, amountCell);
+    const excludeCell = tr.insertCell(4);
+    excludeCell.appendChild(createExcludeBtn(expense));
+    
+    tr.append(dateCell, typeCell, descriptionCell, amountCell, excludeCell);
     bodyTable.appendChild(tr);
   })
 }
@@ -215,4 +223,17 @@ function searchExpense() {
   const expense = createExpense();
   const soughtExpenses = db.search(expense);
   loadExpensesList(soughtExpenses);
+}
+
+function createExcludeBtn(expense) {
+    const excludeButton = document.createElement('button');
+    excludeButton.className = 'border-0 bg-transparent fas fa-times';
+    excludeButton.id = `id-expense-${expense.id}`;
+    excludeButton.addEventListener('click', removeExpense);
+    function removeExpense() {
+      const id = this.id.replace('id-expense-', '');
+      db.remove(id);
+      window.location.reload();
+    }
+    return excludeButton;
 }
