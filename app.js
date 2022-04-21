@@ -101,15 +101,15 @@ try {
   formRegister.addEventListener('submit', e => {
     e.preventDefault();
     const expense = createExpense();
-    registerExpense(expense);
-    formRegister.reset();
+    if(registerExpense(expense)){
+      formRegister.reset();
+    }
   });
 } catch {
   const formSearch = document.getElementById('search');
   formSearch.addEventListener('submit', e => {
     e.preventDefault();
     searchExpense();
-    formSearch.reset();
   });
 }
 
@@ -137,11 +137,13 @@ function createExpense() {
 function registerExpense(expense) {
   if (expense.validateData()) {
     db.store(expense);
+    showSuccessModal();
     $('#modal-feedback').modal('show');
-    showSuccessModal()
+    return true;
   } else {
     showErrorModal();
     $('#modal-feedback').modal('show');
+    return false;
   }
 }
 
@@ -232,7 +234,6 @@ function createExcludeBtn(expense) {
     function removeExpense() {
       const id = this.id.replace('id-expense-', '');
       db.remove(id);
-      window.location.reload();
     }
     return excludeButton;
 }
