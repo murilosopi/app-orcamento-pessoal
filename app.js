@@ -38,26 +38,26 @@ class Expense {
 class Database {
 
   constructor() {
-    let id = localStorage.getItem('id');
+    const id = localStorage.getItem('id');
     if (id === null) {
       localStorage.setItem('id', 0);
     }
   }
 
   getNextId() {
-    let nextId = localStorage.getItem('id');
-    return parseInt(nextId) + 1;
+    const nextId = parseInt(localStorage.getItem('id')) + 1;
+    return nextId;
   }
 
-  store(e) {
-    let id = this.getNextId();
+  store(expense) {
+    const id = this.getNextId();
     localStorage.setItem('id', id);
-    localStorage.setItem(id, JSON.stringify(e));
+    localStorage.setItem(id, JSON.stringify(expense));
   }
 
   getAllRegisters() {
-    let expenses = [];
-    let id = localStorage.getItem('id');
+    const expenses = [];
+    const id = localStorage.getItem('id');
     for(let i = 1; i <= id; i++) {
       const expense = JSON.parse(localStorage.getItem(i));
       if(expense === null) {
@@ -71,7 +71,6 @@ class Database {
 
   search(expense) {
     let filtredExpenses = this.getAllRegisters();
-    // ano
     if(expense.year != '') {
       filtredExpenses = filtredExpenses.filter(e => e.year == expense.year);
     }
@@ -93,9 +92,9 @@ class Database {
 
   remove(id) {
       localStorage.removeItem(id);
-    }
+  }
 }
-let db = new Database();
+const db = new Database();
 
 try {
   const formRegister = document.getElementById('register');
@@ -123,7 +122,7 @@ function createExpense() {
   const description = document.getElementById('description');
   const amount = document.getElementById('amount');
 
-  let expense = new Expense(
+  const expense = new Expense(
     day.value,
     month.value,
     year.value,
@@ -163,7 +162,7 @@ function showSuccessModal() {
 function showErrorModal() {
   const modal = document.querySelector('#modal-feedback');
   const message = modal.querySelector('#modal-msg');
-  message.textContent = "Existem campos obrigatórios que não foram preenchidos com dados válidos. Por favor, preencha novamente.";
+  message.textContent = "Existem campos obrigatórios que não foram preenchidos com dados válidos.";
 
   const title = modal.querySelector('.modal-title');
   title.textContent = "Erro na gravação";
