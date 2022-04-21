@@ -3,9 +3,17 @@
 Se trata de uma aplicação capaz de armazenar localmente despesas com uma descrição, data, tipo e valor.
 
 ## Tecnologias Utilizadas:
-+ [HTML](https://developer.mozilla.org/docs/Web/HTML)
-+ [Bootstrap 4.6](https://getbootstrap.com/docs/4.6/)
-+ **[Javascript](https://developer.mozilla.org/docs/Web/JavaScript)**
+<ul>
+  <li>
+    <a href="https://developer.mozilla.org/docs/Web/HTML" target="_blank">HTML</a>  
+  </li>
+  <li>
+    <a href="https://getbootstrap.com/docs/4.6/" target="_blank">Bootstrap 4.6</a>
+  </li>
+  <li>
+    <a href="https://developer.mozilla.org/docs/Web/JavaScript" target="_blank">JavaScript</a>
+  </li>
+</ul>
 
 # Como funciona
 Veja a seguir como funcionam as principais funcionalidades desta aplicação:
