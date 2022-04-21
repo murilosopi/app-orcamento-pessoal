@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html class="h-100" lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,7 +11,7 @@
   <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/fe0f6eac9b.js" crossorigin="anonymous"></script>
 </head>
-<body onload="loadExpensesList(db.getAllRegisters())">
+<body class="d-flex flex-column h-100" onload="loadExpensesList(db.getAllRegisters())">
   
   <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <div class="container">
@@ -150,6 +150,13 @@
       </div>
     </form>    
   </main>
+
+  <footer class="bg-dark text-center text-light p-2 mt-auto">
+    Desenvolvido por <a href="https://github.com/murilosopi/" target="_blank" rel="author" class="text-light font-weight-bold ">
+      Murilo Sopi
+      <i class="fa-brands fa-github"></i>
+    </a>
+  </footer>
 
   <script src="app.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
